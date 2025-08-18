@@ -8,6 +8,7 @@
 // select = executeQuery
 // insert, update, delete = executeUpdate
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,22 +34,31 @@ public class productDBC {
         String sql = "SELECT * FROM products";
 
         try(Connection connection = DATABASE_Inventory.getConnection();
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                products.add(new product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getInt("quantity")
+        PreparedStatement statement = connection.prepareStatement(sql)){
 
-                ));
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                product p = mapRowForProducts(rs);
+                products.add(p);
+
             }
-        }catch(SQLException e){
+
+        }catch (SQLException e){
             System.out.println("Error " + e.getMessage());
         }
         return products;
     }
+
+    public product mapRowForProducts(ResultSet rs) throws SQLException {
+        return new product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getDouble("price"),
+                rs.getInt("quantity")
+        );
+    }
+
 
     public product getSearchProductByID (int id){
         String sql = "SELECT * FROM products WHERE id = ?";
