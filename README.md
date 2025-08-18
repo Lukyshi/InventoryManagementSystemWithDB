@@ -19,4 +19,4 @@ A simple console-based inventory management system built with **Java** and **MyS
 ## 🚀 How to Run
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Lukyshi/Inventory-InventoryManagementSystemWithDB.git
+   git clone https://github.com/Lukyshi/InventoryManagementSystemWithDB.git
